@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SIM Colouring and Label Highlighter (Fixed Service Type Handling)
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  Highlight SIMs based on labels and OFD, excluding specific service types (including ORDT Service Type Request) from OFD coloring, but still using label colors where applicable.
 // @author       Konstantinos Boutis
 // @match        https://issues.amazon.com/issues/search*
@@ -17,7 +17,7 @@
         'Notice': '#fff3cd'
     };
 
-    const combinedColor = 'red';
+    const combinedColor = '#ffc400ff';
     const greenColor = '#d4edda';
     const amberColor = '#fff3cd';
     const redColor = '#f8d7da';
