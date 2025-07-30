@@ -17,7 +17,7 @@
         'Notice': '#fff3cd'
     };
 
-    const combinedColor = '';
+    const combinedColor = 'red';
     const greenColor = '#d4edda';
     const amberColor = '#fff3cd';
     const redColor = '#f8d7da';
