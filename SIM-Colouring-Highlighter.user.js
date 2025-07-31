@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         SIM Colouring and Label Highlighter (Fixed Service Type Handling)
 // @namespace    http://tampermonkey.net/
-// @version      1.4
+// @version      1.5
 // @description  Highlight SIMs based on labels and OFD, excluding specific service types (including ORDT Service Type Request) from OFD coloring, but still using label colors where applicable.
 // @author       Konstantinos Boutis
 // @match        https://issues.amazon.com/issues/search*
-// @downloadURL  https://raw.githubusercontent.com/Kostas9093/Amazon-Script/main/SIM-Colouring-Highlighter.user.js
-// @updateURL    https://raw.githubusercontent.com/Kostas9093/Amazon-Script/main/SIM-Colouring-Highlighter.user.js
+// @downloadURL  https://raw.githubusercontent.com//Kostas9093/Amazon-Script/main/SIM-Colouring-Highligter.user.js
+// @updateURL    https://raw.githubusercontent.com/Kostas9093/Amazon-Script/main/SIM-Colouring-Highligter.user.js
 // ==/UserScript==
 
 (function () {
@@ -14,13 +14,13 @@
 
     const labelColorMap = {
         'Proposed': '#D8BFD8',
-        'Notice': '#fff3cd'
+        'Notice': '#89c4d6ff'
     };
 
-    const combinedColor = '#ffc400ff';
+    const combinedColor = 'linear-gradient(to right, #D8BFD8 50%, #89c4d6ff 50%)';
     const greenColor = '#d4edda';
-    const amberColor = '#fff3cd';
-    const redColor = '#f8d7da';
+    const amberColor = '#ffdf78ff';
+    const redColor = '#fab1b7ff';
     const redBorder = '2px solid red';
 
     const excludedServiceTypes = [
@@ -74,7 +74,7 @@
             const labelTitles = Array.from(labels).map(label => label.getAttribute('title'));
 
             if (labelTitles.includes('Notice') && labelTitles.includes('Proposed')) {
-                item.style.backgroundColor = combinedColor;
+                item.style.backgroundImage = combinedColor;
                 labelMatched = true;
             } else {
                 for (const title of labelTitles) {
