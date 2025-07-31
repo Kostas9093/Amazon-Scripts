@@ -14,10 +14,10 @@
 
     const labelColorMap = {
         'Proposed': '#D8BFD8',
-        'Notice': '#89c4d6ff'
+        'Notice':  '#c2c1c1ff'
     };
 
-    const combinedColor = 'linear-gradient(to right, #D8BFD8 50%, #89c4d6ff 50%)';
+    const combinedColor = 'linear-gradient(to right, #D8BFD8 50%, #c2c1c1ff 50%)';
     const greenColor = '#d4edda';
     const amberColor = '#ffdf78ff';
     const redColor = '#fab1b7ff';
