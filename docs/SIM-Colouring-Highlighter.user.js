@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SIM Colouring and Label Highlighter (Fixed Service Type Handling)
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      2.0
 // @description  Highlight SIMs based on labels and OFD, excluding specific service types (including ORDT Service Type Request) from OFD coloring, but still using label colors where applicable.
 // @author       Konstantinos Boutis
 // @match        https://issues.amazon.com/issues/search*
@@ -13,15 +13,15 @@
     'use strict';
 
     const labelColorMap = {
-        'Proposed': '#D8BFD8',
-        'Notice':  '#c2c1c1ff'
+        'Proposed': '#d4edda',
+        'Notice':  '#feffc2ff'
     };
 
-    const combinedColor = 'linear-gradient(to right, #D8BFD8 50%, #c2c1c1ff 50%)';
-    const greenColor = '#d4edda';
-    const amberColor = '#ffdf78ff';
-    const redColor = '#fab1b7ff';
-    const redBorder = '2px solid red';
+    const combinedColor = 'linear-gradient(to right, #d4edda 50%, #feffc2ff 50%)';
+    const greenColor = '3px solid #39ff67ff';
+    const amberColor = '3px solid #ffc400ff';
+    const redColor = '3px solid #fab1b7ff';
+    const redBorder = '3px solid red';
 
     const excludedServiceTypes = [
         'ORDT Service Type Request',
@@ -100,14 +100,14 @@
                 const dayDiff = getDayDifference(ofdDate);
                 item.style.border = (dayDiff >= 0 && dayDiff <= 3) ? redBorder : '';
 
-                if (!labelMatched && !isExcluded) {
+                if (!isExcluded) {
                     const weekDiff = getWeekDifference(ofdDate);
                     if (weekDiff > 4) {
-                        item.style.backgroundColor = greenColor;
+                        item.style.border = greenColor;
                     } else if (weekDiff > 3) {
-                        item.style.backgroundColor = amberColor;
+                        item.style.border = amberColor;
                     } else {
-                        item.style.backgroundColor = redColor;
+                        item.style.border = redColor;
                     }
                 }
             } else {
