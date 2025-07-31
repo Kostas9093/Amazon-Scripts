@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SIM Colouring and Label Highlighter (Fixed Service Type Handling)
 // @namespace    http://tampermonkey.net/
-// @version      2.4
+// @version      1.0
 // @description  Highlight SIMs based on labels and OFD, excluding specific service types (including ORDT Service Type Request) from OFD coloring, but still using label colors where applicable.
 // @author       Konstantinos Boutis
 // @match        https://issues.amazon.com/issues/search*
