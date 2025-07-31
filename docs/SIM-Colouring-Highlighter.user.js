@@ -5,8 +5,8 @@
 // @description  Highlight SIMs based on labels and OFD, excluding specific service types (including ORDT Service Type Request) from OFD coloring, but still using label colors where applicable.
 // @author       Konstantinos Boutis
 // @match        https://issues.amazon.com/issues/search*
-// @downloadURL  https://raw.githubusercontent.com/Kostas9093/Amazon-Script/main/SIM-Colouring-Highlighter.user.js
-// @updateURL    https://raw.githubusercontent.com/Kostas9093/Amazon-Script/main/SIM-Colouring-Highlighter.user.js
+// @downloadURL  https://kostas9093.github.io/Amazon-Script/SIM-Colouring-Highlighter.user.js
+// @updateURL    https://kostas9093.github.io/Amazon-Script/SIM-Colouring-Highlighter.user.js
 // ==/UserScript==
 
 (function () {
