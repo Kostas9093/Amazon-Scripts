@@ -72,7 +72,9 @@
          return `**cycle 1**`;
        }else if (serviceType === 'SameDay Launch'){
          return `**cycle SD**`;
-       }else{
+       }else if (serviceType === 'MCO/SCO'){
+         return `**cycle 1 , cycle 2**`;
+        }else{
         const fallback = extractCycleFallback();
         return `**${fallback}**`;}
     }
