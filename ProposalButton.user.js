@@ -14,6 +14,9 @@
 
     console.log('✅ Tampermonkey script loaded');
 
+
+
+
     function extractCountry() {
         const span = document.querySelector('span.editable-field-display-text');
         if (!span) return null;
@@ -57,6 +60,7 @@
     }
 
 
+
     function extractCycle(serviceType){
         if (serviceType === 'ORDT'){
          return `**cycle 1**`;
@@ -68,49 +72,46 @@
          return `**cycle 1**`;
        }else if (serviceType === 'SameDay Launch'){
          return `**cycle SD**`;
-       }else if (serviceType === 'SameDay'){
-         return `**cycle SD**`;
        }else{
         const fallback = extractCycleFallback();
         return `**${fallback}**`;}
     }
 
+
+    //extract service type from  both <p> and <code> elements
         function extractCycleFallback() {
-    const paragraphs = document.querySelectorAll('p');
-    for (const p of paragraphs) {
-        if (p.innerText.includes('Cycles Impacted')) {
-            const lines = p.innerText.split('\n').map(line => line.trim()).filter(Boolean);
+    const elements = document.querySelectorAll('p, code');
+
+    for (const el of elements) {
+        if (el.innerText.toLowerCase().includes('cycles impacted')) {
+            const lines = el.innerText
+                .split('\n')
+                .map(line => line.trim())
+                .filter(Boolean);
+
             const index = lines.findIndex(line => line.toLowerCase().includes('cycles impacted'));
             if (index !== -1 && lines[index + 1]) {
                 const value = lines[index + 1].replace(/"/g, '').trim();
 
-                switch (value) {
-                    case 'SD':
-                        return 'cycle SD';
-                    case 'SD_A':
-                        return 'cycle SD_A';
-                    case 'SD_B':
-                        return 'cycle SD_B';
-                    case 'SD_C':
-                        return 'cycle SD_C';
-                    case 'SD_D':
-                        return 'cycle SD_D';
-                    case 'Cycle SD':
-                        return 'cycle SD';
-                    case 'Cycle 1':
-                        return 'cycle 1';
-                    case 'cycle 1':
-                        return 'cycle 1';
-                    case 'cycle 2':
-                        return 'cycle 2';
-                    default:
-                        return 'cycle';
+                switch (value.toLowerCase()) {
+                    case 'SD': return 'cycle SD';
+                    case 'SD_A': return 'cycle SD_A';
+                    case 'SD_B': return 'cycle SD_B';
+                    case 'SD_C': return 'cycle SD_C';
+                    case 'SD_D': return 'cycle SD_D';
+                    case 'Cycle SD': return 'cycle SD';
+                    case 'Cycle 1': return 'cycle 1';
+                    case 'cycle 1': return 'cycle 1';
+                    case 'cycle 2': return 'cycle 2';
+                    default: return 'cycle';
                 }
             }
         }
     }
+
     return 'cycle ??';
 }
+
 
 function getServiceMessage(serviceType) {
 
@@ -143,11 +144,13 @@ Must be one of`;
 **DSP (incl. on/off boarding)**
 DSP +++ has now been offboarded/onboarded.
 
+
 **RGU Coverage**
 
 **Compatibility area**
 
 Compatibility areas should cover a minimum of 80% of the DSPs volume and only exclude difficult zones for new driver, regardless of what DSP delivers in the area.
+Please raise a new SIM for compatibility area and provide polygons with an area recommendation for Both DSPs.
 
 In future requests, kindly ensure the inclusion of additional RGUs that align with nursery compatibility, in adherence to our [Tenets](https://w.amazon.com/bin/view/EUCO/Processes/EUCOSM/Configuration/RGUs/Tenets/).
 `;
@@ -157,13 +160,15 @@ In future requests, kindly ensure the inclusion of additional RGUs that align wi
 **Compatibility area**
 
 Compatibility areas should cover a minimum of 80% of the DSPs volume and only exclude difficult zones for new driver, regardless of what DSP delivers in the area.
+Please raise a new SIM for compatibility area and provide polygons with an area recommendation for Both DSPs.
 
 In future requests, kindly ensure the inclusion of additional RGUs that align with nursery compatibility, in adherence to our [Tenets](https://w.amazon.com/bin/view/EUCO/Processes/EUCOSM/Configuration/RGUs/Tenets/).
 `;
     }else if (serviceType === 'Compatibility Area') {
         return `**Compatibility area**
-
+The compatibility area coverage is currently at **++% for DSP ++**  which does not adhere our Tenets, however volume coverage for DSP ++ appears to be enough (++%), so at this point we will proceed with your request.
 Compatibility areas should cover a minimum of 80% of the DSPs volume and only exclude difficult zones for new driver, regardless of what DSP delivers in the area.
+Please raise a new SIM for compatibility area and provide polygons with an area recommendation for Both DSPs.
 
 In future requests, kindly ensure the inclusion of additional RGUs that align with nursery compatibility, in adherence to our [Tenets](https://w.amazon.com/bin/view/EUCO/Processes/EUCOSM/Configuration/RGUs/Tenets/).
 `;
@@ -220,6 +225,8 @@ In future requests, kindly ensure the inclusion of additional RGUs that align wi
     const span = document.querySelector('span.editable-field-display-text');
     if (!span) return null;
 
+
+
     const text = span.textContent;
     let serviceType = null;
     // Try Pattern B: Find text between first and second dashes
@@ -229,7 +236,7 @@ In future requests, kindly ensure the inclusion of additional RGUs that align wi
     }
 
     // Try Pattern A: Known types
-    const knownTypes = ['ORDT', 'Investigation', 'Hard Constraints', 'Jurisdiction Change', 'Compatibility Area', 'DSP On/Off Boarding', 'DSP Share Change', 'Recommended RGU Adjustment', 'RGU Adjustment', 'SD Acceleration', 'MicroMobility (Bikers/Walkers)'];
+    const knownTypes = ['ORDT', 'Investigation', 'Hard Constraints', 'Jurisdiction Change', 'Compatibility Area', 'DSP On/Off Boarding', 'DSP Share Change', 'Recommended RGU Adjustment', 'RGU Adjustment'];
     const lowerText = text.toLowerCase();
     for (const type of knownTypes) {
         if (lowerText.includes(type.toLowerCase())) {
@@ -237,7 +244,7 @@ In future requests, kindly ensure the inclusion of additional RGUs that align wi
         }
     }
 
-    return null;
+    return null; // no match
 }
 
      function paatOption(serviceType){
@@ -266,6 +273,7 @@ PAAT Option 3 was used for this deployment. If you would like to override PAAT3 
     }
 
 
+
     const approvalLinks = {
         uk: 'https://approvals.amazon.com/Template/Details/161093',
         meu: 'https://approvals.amazon.com/template/details/172663',
@@ -281,9 +289,10 @@ PAAT Option 3 was used for this deployment. If you would like to override PAAT3 
         if (countryCode === 'uk') return approvalLinks.uk;
         if (meuCountries.includes(countryCode)) return approvalLinks.meu;
         if (seuCountries.includes(countryCode)) return approvalLinks.seu;
-        return approvalLinks.seu;
+        return approvalLinks.seu; // fallback
     }
 
+    // Resize helper
     function autoResizeTextarea(textarea) {
         textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
@@ -301,19 +310,21 @@ function extractAliasFromAssignableField() {
     const icons = document.querySelectorAll('i.icon-user');
 
     for (const icon of icons) {
+        // Look for span.editable-field-display-trigger in the same parent or nearby
         const container = icon.closest('div');
         const span = container?.querySelector('span.editable-field-display-trigger');
 
         if (span) {
             const alias = span.textContent.trim();
-           // console.log("✅ Found alias near icon-user:", alias);
+            console.log("✅ Found alias near icon-user:", alias);
             return alias;
         }
     }
 
-    //console.log("❌ No matching alias found");
+    console.log("❌ No matching alias found");
     return null;
 }
+
 
 
 function extractFullNameFromDOMMatchingAlias(alias) {
@@ -360,10 +371,12 @@ function extractFullNameFromDOMMatchingAlias(alias) {
                         const service = getServiceMessage(serviceType);
                         const paat = paatOption(serviceType);
                         const paatUsage = getPaatMessage(serviceType, approvalLink);
+
                         const alias = extractAliasFromAssignableField();
-                        const fullName = alias ? extractFullNameFromDOMMatchingAlias(alias) : 'COSM Team';
+                       const fullName = alias ? extractFullNameFromDOMMatchingAlias(alias) : 'COSM Team';
+
                         const cycle = extractCycle(serviceType);
-                        
+
                         const message = `Dear **${station}**,
 
 Thank you for contacting the **EU COSM** team!
@@ -391,12 +404,12 @@ ${fullName}`;
                             textarea.dispatchEvent(new Event('input', { bubbles: true }));
                             textarea.dispatchEvent(new Event('change', { bubbles: true }));
 
-                            autoResizeTextarea(textarea);
-                            attachAutoResize(textarea);
+                            autoResizeTextarea(textarea); // initial resize
+                            attachAutoResize(textarea); // make dynamic
 
-                            //console.log(`✅ Message inserted for station: ${station}`);
+                            console.log(`✅ Message inserted for station: ${station}`);
                         } else {
-                           // alert('❌ Could not find the textarea.');
+                            alert('❌ Could not find the textarea.');
                         }
                     });
 
